@@ -249,7 +249,7 @@ export const Chatbot = () => {
           <S.ChatbotHeaderTitle>
             {name
               ? `안녕하세요!\n
-            ${name}님의 프로필입니다.`
+            ${name} 교수님의 프로필입니다.`
               : "안녕하세요!"}
           </S.ChatbotHeaderTitle>
           {/* 이미지가 없으면 아예 보이지 않도록 처리 */}
