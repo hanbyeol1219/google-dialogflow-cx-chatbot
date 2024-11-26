@@ -165,6 +165,7 @@ export const S = {
     border-radius: 5px;
     border: 1px solid #e0e0e0;
     outline: none;
+    background-color: #fff;
   `,
   ChatbotInputButton: styled.div`
     cursor: pointer;
@@ -271,6 +272,7 @@ export const S = {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     outline: none;
     white-space: nowrap;
+    background-color: #fff;
 
     &:hover {
       background-color: #3baad6;
