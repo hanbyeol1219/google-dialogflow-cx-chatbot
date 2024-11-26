@@ -9,6 +9,8 @@ const app = express();
 const port = 5000;
 
 const keyPath = process.env.GOOGLE_APPLICATION_CREDENTIALS;
+const deployURL = process.env.DEPLOY_URL;
+const localURL = process.env.LOCAL_URL;
 
 if (!keyPath) {
   process.exit(1);
@@ -16,7 +18,7 @@ if (!keyPath) {
 
 app.use(
   cors({
-    origin: "*",
+    origin: [deployURL, localURL],
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
