@@ -14,7 +14,13 @@ if (!keyPath) {
   process.exit(1);
 }
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "*",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
 app.use(json());
 app.use(express.json());
 

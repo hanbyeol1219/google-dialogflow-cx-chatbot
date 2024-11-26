@@ -120,7 +120,7 @@ export const Chatbot = () => {
         ...prev,
         {
           type: "bot",
-          text: "서버와의 통신 중 오류가 발생했습니다.\n다시 시도해주세요.",
+          text: "서버와의 통신 중 오류가 발생했습니다. 다시 시도해주세요.",
           createTime: moment().format("YYYY-MM-DD HH:mm:ss"),
           error: true,
         },
@@ -149,7 +149,7 @@ export const Chatbot = () => {
           ...prev,
           {
             type: "bot",
-            text: "서버와의 통신 중 오류가 발생했습니다.\n다시 시도해주세요.",
+            text: "서버와의 통신 중 오류가 발생했습니다. 다시 시도해주세요.",
             createTime: moment().format("YYYY-MM-DD HH:mm:ss"),
             error: true,
           },
@@ -230,7 +230,7 @@ export const Chatbot = () => {
         ...prev,
         {
           type: "bot",
-          text: "서버와의 통신 중 오류가 발생했습니다.\n다시 시도해주세요.",
+          text: "서버와의 통신 중 오류가 발생했습니다. 다시 시도해주세요.",
           createTime: moment().format("YYYY-MM-DD HH:mm:ss"),
           error: true,
         },
