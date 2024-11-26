@@ -6,6 +6,7 @@ import { S } from "./chatbot.styles";
 import { FiSend } from "react-icons/fi";
 import { FaPlus } from "react-icons/fa6";
 import { parseBotResponses, sendEvent, sendMessage } from "../api/api";
+import ProfileImage from "../assets/profile-removebg-preview.png";
 
 export const Chatbot = () => {
   const name = useParams().name;
@@ -245,9 +246,12 @@ export const Chatbot = () => {
             ${name}님의 프로필입니다.`
               : "안녕하세요!"}
           </S.ChatbotHeaderTitle>
-          <S.ChatbotHeaderImagaeBox>
-            <S.ChatbotHeaderImage src="/src/assets/profile-removebg-preview.png" />
-          </S.ChatbotHeaderImagaeBox>
+          {/* 이미지가 없으면 아예 보이지 않도록 처리 */}
+          {ProfileImage && (
+            <S.ChatbotHeaderImagaeBox>
+              <S.ChatbotHeaderImage src={ProfileImage} />
+            </S.ChatbotHeaderImagaeBox>
+          )}
         </S.ChatbotHeader>
         <S.BasicButtonWrapper
           ref={scrollRef}
