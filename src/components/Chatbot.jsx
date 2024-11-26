@@ -43,32 +43,24 @@ export const Chatbot = () => {
   ];
   const buttons = [
     {
-      text: "소개",
-      event: "button1_event",
+      text: "권오형 대표 소개",
+      event: "introduction_event",
     },
     {
-      text: "학력",
+      text: "강의 분야",
       event: "button2_event",
     },
     {
-      text: "경력",
+      text: "강의 경력",
       event: "button3_event",
     },
     {
-      text: "수상",
+      text: "주요 저서",
       event: "button4_event",
     },
     {
-      text: "논문",
+      text: "기타",
       event: "button5_event",
-    },
-    {
-      text: "학회",
-      event: "button6_event",
-    },
-    {
-      text: "저서",
-      event: "button7_event",
     },
   ];
 
@@ -94,11 +86,11 @@ export const Chatbot = () => {
       return;
     }
 
-    if (buttons.some((button) => button.text === userMessage)) {
-      const button = buttons.find((button) => button.text === userMessage);
-      handleButtonClick(button);
-      return;
-    }
+    // if (buttons.some((button) => button.text === userMessage)) {
+    //   const button = buttons.find((button) => button.text === userMessage);
+    //   handleButtonClick(button);
+    //   return;
+    // }
 
     setMessages((prev) => [
       ...prev,
@@ -219,9 +211,12 @@ export const Chatbot = () => {
     isDragging = false;
   };
 
-  const sendWelcomeEvent = async () => {
+  const sendDefaultIntroduction = async () => {
     try {
-      const botResponses = await sendEvent("welcome_event", sessionId.current);
+      const botResponses = await sendEvent(
+        "default_introduction",
+        sessionId.current
+      );
       const parsedMessages = parseBotResponses(botResponses);
       setMessages((prev) => [...prev, ...parsedMessages]);
     } catch (error) {
@@ -239,7 +234,7 @@ export const Chatbot = () => {
   };
 
   useEffect(() => {
-    sendWelcomeEvent();
+    sendDefaultIntroduction();
   }, []);
 
   return (
@@ -249,7 +244,7 @@ export const Chatbot = () => {
           <S.ChatbotHeaderTitle>
             {name
               ? `안녕하세요!\n
-            ${name} 교수님의 프로필입니다.`
+            ${name}님의 프로필입니다.`
               : "안녕하세요!"}
           </S.ChatbotHeaderTitle>
           {/* 이미지가 없으면 아예 보이지 않도록 처리 */}
