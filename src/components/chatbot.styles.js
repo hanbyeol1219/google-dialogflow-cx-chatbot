@@ -65,7 +65,7 @@ export const S = {
     font-weight: 600;
     color: #fff;
     white-space: pre-line;
-    line-height: 0.8;
+    z-index: 100;
   `,
   ChatbotHeaderImagaeBox: styled.div`
     width: 150px;
@@ -74,9 +74,9 @@ export const S = {
     justify-content: center;
     align-items: center;
 
-    @media (max-width: 450px) {
-      display: none;
-    }
+    // @media (max-width: 450px) {
+    //   display: none;
+    // }
   `,
   ChatbotHeaderImage: styled.img`
     width: 100%;
