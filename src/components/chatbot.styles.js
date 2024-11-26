@@ -161,7 +161,8 @@ export const S = {
   ChatbotInputText: styled.input`
     width: calc(100% - 80px);
     height: 40px;
-    padding: 10px;
+    padding: 5px 10px;
+    font-size: 16px;
     border-radius: 5px;
     border: 1px solid #e0e0e0;
     outline: none;
@@ -183,7 +184,7 @@ export const S = {
   `,
   IconWrapper: styled.div`
     display: inline-block;
-    transition: transform 0.3s ease; /* 부드러운 회전을 위한 트랜지션 */
+    transition: transform 0.3s ease;
     transform: ${(props) => (props.$isOpen ? "rotate(45deg)" : "rotate(0deg)")};
   `,
 

@@ -171,7 +171,7 @@ export const Chatbot = () => {
   };
 
   useEffect(() => {
-    if (inputRef.current && window.innerWidth < 768) {
+    if (inputRef.current && window.innerWidth >= 768) {
       inputRef.current.focus();
     }
   }, [messages]);
