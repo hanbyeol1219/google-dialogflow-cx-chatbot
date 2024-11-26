@@ -34,6 +34,7 @@ export const S = {
     }
   `,
   ChatbotHeader: styled.div`
+    position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -59,6 +60,7 @@ export const S = {
     }
   `,
   ChatbotHeaderTitle: styled.h1`
+    position: relative;
     margin: 0;
     padding: 0;
     font-size: 18px;
@@ -73,10 +75,14 @@ export const S = {
     display: flex;
     justify-content: center;
     align-items: center;
+    position: absolute;
+    top: 0;
+    right: 10px;
+    z-index: 2;
 
-    // @media (max-width: 450px) {
-    //   display: none;
-    // }
+    @media (max-width: 320px) {
+      display: none;
+    }
   `,
   ChatbotHeaderImage: styled.img`
     width: 100%;
