@@ -125,6 +125,7 @@ export const S = {
 
   ChatbotMessageText: styled.div`
     background-color: ${({ $isUser }) => ($isUser ? "#cfe5f1" : "#ffffff")};
+    color: ${({ $isError }) => ($isError ? "#b90808" : "#000")};
     margin: 0;
     padding: 10px 15px;
     border-radius: 10px;

@@ -7,6 +7,9 @@ import { FiSend } from "react-icons/fi";
 import { FaPlus } from "react-icons/fa6";
 import { parseBotResponses, sendEvent, sendMessage } from "../api/api";
 import ProfileImage from "../assets/profile-removebg-preview.png";
+import PefamImage from "../assets/pefam.png";
+import ForcatImage from "../assets/forcat.png";
+import CompanyImage from "../assets/company.png";
 
 export const Chatbot = () => {
   const name = useParams().name;
@@ -23,19 +26,19 @@ export const Chatbot = () => {
   let scrollLeft = 0;
   const bottomMenus = [
     {
+      text: "Moriahtown",
+      anchor: "https://www.moriahtown.com/",
+      img: CompanyImage,
+    },
+    {
       text: "Pefam",
       anchor: "https://pefam.co.kr/",
-      img: "/src/assets/pefam.png",
+      img: PefamImage,
     },
     {
       text: "Forcat",
       anchor: "https://www.forcat.kr/",
-      img: null,
-    },
-    {
-      text: "Moriahtown",
-      anchor: "https://www.moriahtown.com/",
-      img: "/src/assets/company.png",
+      img: ForcatImage,
     },
   ];
   const buttons = [
@@ -117,8 +120,9 @@ export const Chatbot = () => {
         ...prev,
         {
           type: "bot",
-          text: "서버와의 통신 중 오류가 발생했습니다.",
+          text: "서버와의 통신 중 오류가 발생했습니다.\n다시 시도해주세요.",
           createTime: moment().format("YYYY-MM-DD HH:mm:ss"),
+          error: true,
         },
       ]);
     }
@@ -145,8 +149,9 @@ export const Chatbot = () => {
           ...prev,
           {
             type: "bot",
-            text: "서버와의 통신 중 오류가 발생했습니다.",
+            text: "서버와의 통신 중 오류가 발생했습니다.\n다시 시도해주세요.",
             createTime: moment().format("YYYY-MM-DD HH:mm:ss"),
+            error: true,
           },
         ]);
       }
@@ -227,6 +232,7 @@ export const Chatbot = () => {
           type: "bot",
           text: "서버와의 통신 중 오류가 발생했습니다.\n다시 시도해주세요.",
           createTime: moment().format("YYYY-MM-DD HH:mm:ss"),
+          error: true,
         },
       ]);
     }
@@ -247,7 +253,7 @@ export const Chatbot = () => {
               : "안녕하세요!"}
           </S.ChatbotHeaderTitle>
           {/* 이미지가 없으면 아예 보이지 않도록 처리 */}
-          {ProfileImage && (
+          {ProfileImage && name && (
             <S.ChatbotHeaderImagaeBox>
               <S.ChatbotHeaderImage src={ProfileImage} />
             </S.ChatbotHeaderImagaeBox>
@@ -282,7 +288,10 @@ export const Chatbot = () => {
                 {moment(message.createTime).format("HH:mm")}
               </S.ChatbotMessageTime>
               {message.text && (
-                <S.ChatbotMessageText $isUser={message.type == "user"}>
+                <S.ChatbotMessageText
+                  $isUser={message.type == "user"}
+                  $isError={message.error}
+                >
                   {message.text}
                 </S.ChatbotMessageText>
               )}

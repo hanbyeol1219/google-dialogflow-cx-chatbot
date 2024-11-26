@@ -43,6 +43,7 @@ export const parseBotResponses = (botResponses) => {
         type: "bot",
         text: botResponse.text.text[0],
         createTime: moment().format("YYYY-MM-DD HH:mm:ss"),
+        error: false,
       });
     }
 
