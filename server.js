@@ -23,7 +23,7 @@ if (!keyPath) {
 
 app.use(
   cors({
-    origin: [deployURL, localURL, serverURL],
+    origin: "*",
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
