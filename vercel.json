@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/sendMessage",
-      "destination": "/api/proxy"
+      "destination": "/api/proxy.js"
     }
   ]
 }
