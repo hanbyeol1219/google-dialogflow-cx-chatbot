@@ -9,11 +9,6 @@ const app = express();
 const port = 5000;
 
 const keyPath = process.env.GOOGLE_APPLICATION_CREDENTIALS;
-const deployURL = process.env.DEPLOY_URL;
-const localURL = process.env.LOCAL_URL;
-
-console.log("deployURL:", deployURL);
-console.log("localURL:", localURL);
 
 if (!keyPath) {
   process.exit(1);
