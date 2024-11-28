@@ -3,7 +3,6 @@ import axiosInstance from "./axios";
 
 // API calling - user message sending
 export const sendMessage = async (userMessage, sessionId) => {
-  console.log("sendMessage 호출:", userMessage, sessionId);
   try {
     const response = await axiosInstance.post("/sendMessage", {
       userMessage,
@@ -39,9 +38,23 @@ export const parseBotResponses = (botResponses) => {
   botResponses.forEach((botResponse) => {
     // text
     if (botResponse.text && botResponse.text.text[0]) {
+      let messageText = botResponse.text.text[0];
+
+      // messageText 내부 ** → <b> 변환
+      messageText = messageText.replace(/\*\*(.*?)\*\*/g, "<b>$1</b>");
+
+      // [구매 링크] 뒤에 있는 링크 추출
+      const regex = /\[Purchase Link\]\((https?:\/\/[^\s]+)\)/g;
+
+      // 링크 매치 → <a> 변환
+      messageText = messageText.replace(regex, (match, link) => {
+        return `<a href="${link}" target="_blank" 
+        style="color: #086ad3; text-decoration: none; font-weight: bold;">[관련 링크]</a>`;
+      });
+
       parsedMessages.push({
         type: "bot",
-        text: botResponse.text.text[0],
+        text: messageText,
         createTime: moment().format("YYYY-MM-DD HH:mm:ss"),
         error: false,
       });

@@ -14,7 +14,13 @@ import CompanyImage from "../assets/company.png";
 export const Chatbot = () => {
   const name = useParams().name;
   const [bottomMenuOpen, setBottomMenuOpen] = useState(false);
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState([
+    {
+      type: "bot",
+      text: `권오형 대표는 건국대학교 신산업융합학과 겸임교수, (주)모리아타운과 모리아컨설팅의 대표이사, 디지털융합교육원 석좌교수로 활동 중입니다. \n삼성전자 연구원과 (주)오픈타운 대표이사를 지낸 그는 2018년 대한민국 신지식인상, 2021년 The Marquis Who’s Who 등재, 매일경제 BEST 벤처 수상 등 다수의 상을 수상하며 업계에서 인정받아 왔습니다.\n베스트셀러 저서 <a href='https://product.kyobobook.co.kr/detail/S000202612253' target='_blank'>[AI 챗GPT 시대 ESG 지속가능경영보고서 작성 실무]</a>와 <a href='https://product.kyobobook.co.kr/detail/S000201054376' target='_blank'>[이것이 챗GPT다]</a>를 집필하였으며, 중소기업학회 등 여러 학회에서 활발히 활동하고 있습니다.\n
+연락처\n• 010-3174-9347\n• tongkennom@gmail.com`,
+    },
+  ]);
   const [userMessage, setUserMessage] = useState("");
   const [menuHeight, setMenuHeight] = useState(0);
   const inputRef = useRef(null);
@@ -44,31 +50,51 @@ export const Chatbot = () => {
   const buttons = [
     {
       text: "권오형 대표 소개",
-      event: "introduction_event",
+      type: "message",
+      // event: "introduction_event",
     },
     {
-      text: "강의 분야",
-      event: "button2_event",
+      text: "연락처",
+      type: "message",
+      // event: "introduction_event",
     },
     {
-      text: "강의 경력",
-      event: "button3_event",
+      text: "학력",
+      type: "message",
+      // event: "button2_event",
     },
     {
-      text: "주요 저서",
-      event: "button4_event",
+      text: "경력",
+      type: "message",
+      // event: "button3_event",
     },
     {
-      text: "기타",
-      event: "button5_event",
+      text: "수상",
+      type: "message",
+      // event: "button4_event",
+    },
+    {
+      text: "논문",
+      type: "message",
+      // event: "button5_event",
+    },
+    {
+      text: "학회",
+      type: "message",
+      // event: "button5_event",
+    },
+    {
+      text: "저서",
+      type: "message",
+      // event: "button5_event",
     },
   ];
 
   // Dialogflow API 필요 변수
   const sessionId = useRef(uuid());
 
-  const handleSendMessage = async () => {
-    if (userMessage.trim() === "") return;
+  const handleSendMessage = async (message) => {
+    if (!message || message.trim() === "") return;
 
     setUserMessage("");
 
@@ -76,11 +102,11 @@ export const Chatbot = () => {
       messages.length > 1 &&
       messages[messages.length - 1].buttons &&
       messages[messages.length - 1].buttons.some(
-        (button) => button.text === userMessage
+        (button) => button.text === message
       )
     ) {
       const button = messages[messages.length - 1].buttons.find(
-        (button) => button.text === userMessage
+        (button) => button.text === message
       );
       handleButtonClick(button);
       return;
@@ -96,15 +122,20 @@ export const Chatbot = () => {
       ...prev,
       {
         type: "user",
-        text: userMessage,
+        text: message,
         createTime: moment().format("YYYY-MM-DD HH:mm:ss"),
       },
     ]);
 
     try {
-      const botResponses = await sendMessage(userMessage, sessionId.current);
+      const botResponses = await sendMessage(
+        `${name}님의 ` + message + "에 대한 정보를 자세히 알려줘",
+        message,
+        sessionId.current
+      );
       console.log("botResponses:", botResponses);
       const parsedMessages = parseBotResponses(botResponses);
+      console.log("parsedMessages:", parsedMessages);
       setMessages((prev) => [...prev, ...parsedMessages]);
     } catch (error) {
       console.error("API 호출 오류:", error);
@@ -120,7 +151,13 @@ export const Chatbot = () => {
     }
   };
 
+  // 버튼 클릭 → 이벤트
   const handleButtonClick = async (button) => {
+    if (button.type === "message") {
+      handleSendMessage(button.text);
+      return;
+    }
+
     setMessages((prev) => [
       ...prev,
       {
@@ -158,7 +195,7 @@ export const Chatbot = () => {
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter" && userMessage.trim() !== "") {
-      handleSendMessage();
+      handleSendMessage(userMessage);
     }
   };
 
@@ -235,6 +272,29 @@ export const Chatbot = () => {
 
   useEffect(() => {
     sendDefaultIntroduction();
+    // const fetchBotResponse = async () => {
+    //   try {
+    //     const botResponse = await sendMessage(
+    //       `${name}정보로 간단한 소개를 해주세요.`,
+    //       sessionId.current
+    //     );
+    //     const parsedMessages = parseBotResponses(botResponse);
+    //     setMessages((prev) => [...prev, ...parsedMessages]);
+    //   } catch (error) {
+    //     console.error("API 호출 오류:", error);
+    //     setMessages((prev) => [
+    //       ...prev,
+    //       {
+    //         type: "bot",
+    //         text: "서버와의 통신 중 오류가 발생했습니다. 다시 시도해주세요.",
+    //         createTime: moment().format("YYYY-MM-DD HH:mm:ss"),
+    //         error: true,
+    //       },
+    //     ]);
+    //   }
+    // };
+
+    // fetchBotResponse();
   }, []);
 
   return (
@@ -286,9 +346,8 @@ export const Chatbot = () => {
                 <S.ChatbotMessageText
                   $isUser={message.type == "user"}
                   $isError={message.error}
-                >
-                  {message.text}
-                </S.ChatbotMessageText>
+                  dangerouslySetInnerHTML={{ __html: message.text }}
+                />
               )}
               {message.buttons && (
                 <S.ChatbotButtons>
@@ -322,7 +381,7 @@ export const Chatbot = () => {
             onKeyDown={handleKeyDown}
             ref={inputRef}
           />
-          <S.ChatbotInputButton onClick={handleSendMessage}>
+          <S.ChatbotInputButton onClick={() => handleSendMessage(userMessage)}>
             <S.ChatbotInputButtonIcon>
               <FiSend style={{ color: "#3baad6" }} />
             </S.ChatbotInputButtonIcon>

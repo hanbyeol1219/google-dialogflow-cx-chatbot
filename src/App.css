@@ -12,6 +12,17 @@ body {
   box-sizing: border-box;
 }
 
+a {
+  color: #086ad3;
+  font-weight: bold;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: none;
+    color: #0a4e8a;
+  }
+}
+
 /*
 .logo {
   height: 6em;
