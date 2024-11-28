@@ -3,6 +3,10 @@
     {
       "source": "/api/(.*)",
       "destination": "/api/proxy.js"
+    },
+    {
+      "source": "/google-dialogflow-cx-chatbot/:path*",
+      "destination": "/index.html"
     }
   ]
 }
