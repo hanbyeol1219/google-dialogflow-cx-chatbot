@@ -22,6 +22,15 @@
 import { SessionsClient } from "@google-cloud/dialogflow-cx";
 
 export default async function handler(req, res) {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+
+  if (req.method === "OPTIONS") {
+    res.status(200).end();
+    return;
+  }
+
   if (req.method !== "POST") {
     res.status(405).json({ error: "Method not allowed" });
     return;
@@ -29,8 +38,13 @@ export default async function handler(req, res) {
 
   const { sessionId, userMessage, event } = req.body;
 
+  const serviceAccount = JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS);
+
   const client = new SessionsClient({
-    keyFilename: process.env.GOOGLE_APPLICATION_CREDENTIALS,
+    credentials: {
+      client_email: serviceAccount.client_email,
+      private_key: serviceAccount.private_key,
+    },
   });
 
   const sessionPath = client.projectLocationAgentSessionPath(
@@ -52,7 +66,6 @@ export default async function handler(req, res) {
         : undefined,
       languageCode: "ko",
     },
-    channel: process.env.VITE_CHANNEL,
   };
 
   try {
@@ -61,6 +74,6 @@ export default async function handler(req, res) {
     res.status(200).json(fulfillmentMessages);
   } catch (error) {
     console.error("API 호출 오류:", error);
-    res.status(500).json({ error: "Internal Server Error" });
+    res.status(500).json({ error: "Internal Server Error", details: error });
   }
 }
