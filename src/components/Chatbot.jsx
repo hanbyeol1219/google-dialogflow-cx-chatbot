@@ -129,8 +129,8 @@ export const Chatbot = () => {
 
     try {
       const botResponses = await sendMessage(
-        `${name}님의 ` + message + "에 대한 정보를 자세히 알려줘",
-        message,
+        `${name}님의 ` + message,
+        // message,
         sessionId.current
       );
       console.log("botResponses:", botResponses);
