@@ -6,7 +6,7 @@ export default async function handler(req, res) {
     target: process.env.PROXY_TARGET_URL || "http://localhost:5000",
     changeOrigin: true,
     pathRewrite: {
-      "^/api": "",
+      "^/sendMessage": "",
     },
   });
 
