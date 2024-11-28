@@ -5,7 +5,7 @@
       "destination": "/api/proxy.js"
     },
     {
-      "source": "/google-dialogflow-cx-chatbot/:path*",
+      "source": "/:path*",
       "destination": "/index.html"
     }
   ]
